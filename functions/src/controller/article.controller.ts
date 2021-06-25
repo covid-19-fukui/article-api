@@ -1,9 +1,15 @@
 import { Controller, Get, Query, UseFilters } from '@nestjs/common';
 import { HttpExceptionFilter } from './http.exception.filter';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiInternalServerErrorResponse,
+  ApiMethodNotAllowedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import ArticleListApiResponse from './dto/article.list.api.response';
 import ArticleService from '../service/article.service';
 import ArticleQuery from './dto/article.query';
+import ArticleErrorResponse from './dto/article.error.response';
 
 /**
  * コントローラ
@@ -30,6 +36,17 @@ export class ArticleController {
     status: 200,
     description: '記事の取得が成功した場合、レスポンスとして返す',
     type: ArticleListApiResponse,
+  })
+  @ApiInternalServerErrorResponse({
+    status: 500,
+    description: '記事の取得が失敗した場合、エラーレスポンスとして返す',
+    type: ArticleErrorResponse,
+  })
+  @ApiMethodNotAllowedResponse({
+    status: 405,
+    description:
+      'get以外のHTTPメソッドでアクセスされた場合、エラーレスポンスとして返す',
+    type: ArticleErrorResponse,
   })
   async getVaccines(
     @Query() query: ArticleQuery,

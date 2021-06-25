@@ -11,14 +11,12 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('記事取得API')
-    .setDescription(
-      '新型コロナワクチンの接種状況の統計データを福井県を軸に集計したデータを提供',
-    )
+    .setDescription('福井新聞の記事情報を提供')
     .setVersion('1.0.0')
     .addServer('https://dev.fooqoo56.com/', '本番環境')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('rssApi', app, document);
 
   await app.listen(5001);
 }
