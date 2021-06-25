@@ -30,7 +30,7 @@ export default class ArticleService {
    * @param {ArticleQuery} articleQuery クエリパラメータ
    * @returns {Promise<ArticleListApiResponse>} 記事
    */
-  async findVaccines(
+  async findArticles(
     articleQuery: ArticleQuery,
   ): Promise<ArticleListApiResponse> {
     const now = moment().tz('Asia/Tokyo').format();

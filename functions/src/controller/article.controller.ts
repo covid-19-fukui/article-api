@@ -48,9 +48,9 @@ export class ArticleController {
       'get以外のHTTPメソッドでアクセスされた場合、エラーレスポンスとして返す',
     type: ArticleErrorResponse,
   })
-  async getVaccines(
+  async getArticles(
     @Query() query: ArticleQuery,
   ): Promise<ArticleListApiResponse> {
-    return this.vaccineService.findVaccines(query);
+    return this.vaccineService.findArticles(query);
   }
 }
