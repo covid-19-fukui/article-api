@@ -40,6 +40,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     switch (status) {
       case 404:
         return 'Not Found';
+      case 400:
+        return 'Bad Request';
       default:
         return 'UndefinedError';
     }
