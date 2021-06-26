@@ -8,6 +8,7 @@ import ArticleListApiResponse from '../../src/controller/dto/article.list.api.re
 import InfoResponse from '../../src/controller/dto/info.response';
 import ArticleResponse from '../../src/controller/dto/article.response';
 import MockDate from 'mockdate';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 describe('ArticleService', () => {
   let articleService: ArticleService;
@@ -34,7 +35,10 @@ describe('ArticleService', () => {
               'title1',
               'link1',
               admin.firestore.Timestamp.fromDate(
-                new Date('2021-12-01 09:00:00'),
+                zonedTimeToUtc(
+                  new Date('2021-12-01 09:00:00+09:00'),
+                  'Asia/Tokyo',
+                ),
               ),
             ),
             new ArticleEntity(
@@ -42,7 +46,10 @@ describe('ArticleService', () => {
               'title2',
               'link2',
               admin.firestore.Timestamp.fromDate(
-                new Date('2021-12-02 09:00:00'),
+                zonedTimeToUtc(
+                  new Date('2021-12-02 09:00:00+09:00'),
+                  'Asia/Tokyo',
+                ),
               ),
             ),
           ];
@@ -74,7 +81,7 @@ describe('ArticleService', () => {
         await articleService.findArticles(new ArticleQuery(1)),
       ).toStrictEqual(
         new ArticleListApiResponse(
-          new InfoResponse('2021-12-01T09:00:00+09:00'), //1638403200
+          new InfoResponse('2021-12-01T09:00:00+09:00'),
           [],
         ),
       );
