@@ -6,6 +6,7 @@ import ArticleListApiResponse from '../controller/dto/article.list.api.response'
 import { ArticleFireStoreRepository } from '../repository/article.repository';
 import * as moment from 'moment-timezone';
 import ArticleQuery from '../controller/dto/article.query';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 /**
  * 記事情報を取得するサービス層
@@ -41,7 +42,10 @@ export default class ArticleService {
         new ArticleResponse(
           entity.title,
           entity.link,
-          Math.floor(entity.datetime.toDate().getTime() / 1000),
+          Math.floor(
+            zonedTimeToUtc(entity.datetime.toDate(), 'Asia/Tokyo').getTime() /
+              1000,
+          ),
         ),
     );
 

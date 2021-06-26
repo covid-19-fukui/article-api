@@ -12,9 +12,6 @@ import MockDate from 'mockdate';
 describe('ArticleService', () => {
   let articleService: ArticleService;
   let articleFireStoreRepository: ArticleFireStoreRepository;
-  Date.now = jest
-    .fn()
-    .mockReturnValue(new Date('2021-12-01 09:00:00').valueOf());
 
   beforeEach(async () => {
     const fireStoreConfig = new (FireStoreConfig as jest.Mock)();
