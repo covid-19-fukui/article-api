@@ -31,9 +31,9 @@ jobs:
         run: |
           yarn install --arch=x64 --platform=linuxmusl
           yarn run build
-      # - name: Run tests
-      #   working-directory: ./functions
-      #   run: npm run test
+      - name: Run tests
+        working-directory: ./functions
+        run: npm run test
 
       - name: Deploy to Cloud Functions
         uses: w9jds/firebase-action@master
