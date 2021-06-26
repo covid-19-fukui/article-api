@@ -6,9 +6,6 @@ import ArticleListApiResponse from '../controller/dto/article.list.api.response'
 import { ArticleFireStoreRepository } from '../repository/article.repository';
 import * as moment from 'moment-timezone';
 import ArticleQuery from '../controller/dto/article.query';
-import * as functions from 'firebase-functions';
-
-const log = functions.logger;
 
 /**
  * 記事情報を取得するサービス層
@@ -34,8 +31,6 @@ export default class ArticleService {
     articleQuery: ArticleQuery,
   ): Promise<ArticleListApiResponse> {
     const now = moment().tz('Asia/Tokyo').format();
-
-    log.info(articleQuery);
 
     const articleEntity: ArticleEntity[] = await this.articleFireStoreRepository.getArticles(
       articleQuery.count,

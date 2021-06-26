@@ -5,6 +5,7 @@ import * as express from 'express';
 import * as functions from 'firebase-functions';
 import * as helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 /**
  * express
@@ -27,6 +28,16 @@ export const createNestServer = async (expressInstance: express.Express) => {
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors();
+
+  // swaggerの設定を追加
+  const options = new DocumentBuilder()
+    .setTitle('記事取得API')
+    .setDescription('福井新聞の記事情報を提供')
+    .setVersion('1.0.0')
+    .addServer('https://dev.fooqoo56.com/', '本番環境')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('rssApi', app, document);
 
   console.log('the server is starting @ firebase');
   return app.init();

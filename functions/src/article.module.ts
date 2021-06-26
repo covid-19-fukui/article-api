@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 
-import { ArticleController } from './controller/article.controller';
+import ArticleController from './controller/article.controller';
 import { HttpExceptionFilter } from './controller/http.exception.filter';
 import { ArticleFireStoreRepository } from './repository/article.repository';
 import FireStoreConfig from './config/firestore.config';

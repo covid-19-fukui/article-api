@@ -17,7 +17,7 @@ import ArticleErrorResponse from './dto/article.error.response';
 @Controller('api/v1/article')
 @ApiTags('api/v1/article')
 @UseFilters(HttpExceptionFilter)
-export class ArticleController {
+export default class ArticleController {
   /**
    * コンストラクタ
    *
