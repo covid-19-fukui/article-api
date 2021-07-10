@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
 } from '@nestjs/common';
-import ArticleErrorResponse from './dto/article.error.response';
+import ArticleErrorResponse from '../dto/article.error.response';
 
 /**
  * エラーハンドリング

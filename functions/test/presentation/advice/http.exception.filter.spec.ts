@@ -5,10 +5,10 @@ import {
   InternalServerErrorException,
   ValidationPipe,
 } from '@nestjs/common';
-import ArticleListApiResponse from '../../src/controller/dto/article.list.api.response';
-import InfoResponse from '../../src/controller/dto/info.response';
-import { ArticleModule } from '../../src/article.module';
-import ArticleService from '../../src/service/article.service';
+import { ArticleModule } from '../../../src/article.module';
+import ArticleService from '../../../src/application/service/article.service';
+import Count from '../../../src/domain/model/count.domain.model';
+import MockDate from 'mockdate';
 
 jest.mock('firebase-functions', () => {
   return {
@@ -24,11 +24,7 @@ jest.mock('firebase-functions', () => {
 describe('HttpExceptionFilter', () => {
   let app: INestApplication;
   let articleService = {
-    findArticles: (count: number) =>
-      new ArticleListApiResponse(
-        new InfoResponse('2021-06-25T12:54:44+09:00'),
-        [],
-      ),
+    findArticles: (count: Count) => [],
   };
 
   beforeAll(async () => {
@@ -42,6 +38,7 @@ describe('HttpExceptionFilter', () => {
     app = moduleRef.createNestApplication();
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     await app.init();
+    MockDate.set('2021-12-01 09:00:00+09:00');
   });
 
   it('記事取得API - 正常系', () => {
@@ -49,7 +46,7 @@ describe('HttpExceptionFilter', () => {
       .get('/api/v1/article/search')
       .expect(200)
       .expect({
-        info: { datetime: '2021-06-25T12:54:44+09:00' },
+        info: { datetime: '2021-12-01T09:00:00+09:00' },
         articles: [],
       });
   });
@@ -90,7 +87,7 @@ describe('HttpExceptionFilter - 例外', () => {
   let app: INestApplication;
 
   let articleService = {
-    findArticles: (count: number) => {
+    findArticles: (count: Count) => {
       throw new InternalServerErrorException();
     },
   };
@@ -105,11 +102,12 @@ describe('HttpExceptionFilter - 例外', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
+    MockDate.set('2021-12-01 09:00:00+09:00');
   });
 
   it('記事取得API - 内部エラー', () => {
     return request(app.getHttpServer())
-      .get('/api/v1/article/search')
+      .get('/api/v1/article/search?count=1')
       .expect(500)
       .expect({ title: 'UndefinedError', detail: 'Internal Server Error' });
   });

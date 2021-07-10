@@ -98,7 +98,7 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!**/*config.ts",
-      "!**/*repository.ts"
+      "!**/*repositoryimpl.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",

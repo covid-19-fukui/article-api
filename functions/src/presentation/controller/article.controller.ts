@@ -1,15 +1,17 @@
 import { Controller, Get, Query, UseFilters } from '@nestjs/common';
-import { HttpExceptionFilter } from './http.exception.filter';
+import { HttpExceptionFilter } from '../advice/http.exception.filter';
 import {
   ApiInternalServerErrorResponse,
   ApiMethodNotAllowedResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import ArticleListApiResponse from './dto/article.list.api.response';
-import ArticleService from '../service/article.service';
-import ArticleQuery from './dto/article.query';
-import ArticleErrorResponse from './dto/article.error.response';
+import ArticleListApiResponse from '../dto/article.list.api.response';
+import ArticleService from '../../application/service/article.service';
+import ArticleQuery from '../dto/article.query';
+import ArticleErrorResponse from '../dto/article.error.response';
+import Now from '../../domain/type/now.domain.type';
+import Count from '../../domain/model/count.domain.model';
 
 /**
  * コントローラ
@@ -51,6 +53,12 @@ export default class ArticleController {
   async getArticles(
     @Query() query: ArticleQuery,
   ): Promise<ArticleListApiResponse> {
-    return this.vaccineService.findArticles(query);
+    const now = Now.new();
+
+    const articles = await this.vaccineService.findArticles(
+      Count.of(query.count),
+    );
+
+    return ArticleListApiResponse.of(now, articles);
   }
 }
