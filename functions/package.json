@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "記事情報を取得するAPI",
   "author": "fooqoo56",
   "license": "UNLICENSED",
@@ -98,7 +98,7 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!**/*config.ts",
-      "!**/*repository.ts"
+      "!**/*repositoryimpl.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import Article from '../../domain/model/article.domain.model';
 
 export default class ArticleResponse {
   @ApiProperty({
@@ -27,5 +28,19 @@ export default class ArticleResponse {
     this.title = title;
     this.link = link;
     this.publishedAt = publishedAt;
+  }
+
+  /**
+   * ファクトリメソッド
+   *
+   * @param {Article} article
+   * @return {ArticleResponse} 記事情報のAPIレスポンス
+   */
+  static of(article: Article): ArticleResponse {
+    return new ArticleResponse(
+      article.title,
+      article.link,
+      article.publishedAt.value,
+    );
   }
 }

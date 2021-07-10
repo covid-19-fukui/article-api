@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import InfoResponse from './info.response';
 import ArticleResponse from './article.response';
+import Article from '../../domain/model/article.domain.model';
+import Now from '../../domain/type/now.domain.type';
 
 /**
  * ユーザ取得APIのレスポンス
@@ -21,5 +23,19 @@ export default class ArticleListApiResponse {
   constructor(info: InfoResponse, vaccination: ArticleResponse[]) {
     this.info = info;
     this.articles = vaccination;
+  }
+
+  /**
+   * ファクトリメソッド
+   *
+   * @param {Now} now
+   * @param {Article[]} articles
+   * @return {ArticleListApiResponse} APIレスポンスクラス
+   */
+  static of(now: Now, articles: Article[]): ArticleListApiResponse {
+    return new ArticleListApiResponse(
+      InfoResponse.from(now),
+      articles.map((article) => ArticleResponse.of(article)),
+    );
   }
 }

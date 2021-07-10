@@ -1,4 +1,4 @@
-import ArticleErrorResponse from '../../../src/controller/dto/article.error.response';
+import ArticleErrorResponse from '../../../src/presentation/dto/article.error.response';
 
 describe('ArticleErrorResponse', () => {
   let articleErrorResponse: ArticleErrorResponse;

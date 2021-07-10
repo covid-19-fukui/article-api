@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import Now from '../../domain/type/now.domain.type';
 
 /**
  * info情報
@@ -17,5 +18,15 @@ export default class InfoResponse {
    */
   constructor(datetime: string) {
     this.datetime = datetime;
+  }
+
+  /**
+   * ファクトリメソッド
+   *
+   * @param {Now} datetime
+   * @return {InfoResponse} API情報のレスポンス
+   */
+  static from(datetime: Now): InfoResponse {
+    return new InfoResponse(datetime.value);
   }
 }

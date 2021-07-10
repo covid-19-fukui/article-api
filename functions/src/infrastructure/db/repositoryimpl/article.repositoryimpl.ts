@@ -1,17 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import FireStoreConfig from '../config/firestore.config';
-import ArticleEntity from './dto/article.entity';
+import FireStoreConfig from '../../../config/firestore.config';
+import ArticleEntity from '../dto/article.entity';
 import * as admin from 'firebase-admin';
+import Article from '../../../domain/model/article.domain.model';
+import ArticleFireStoreRepository from '../../../domain/repository/aritcle.repository';
+import Count from '../../../domain/model/count.domain.model';
 
 /**
  * ユーザを取得するサービス層
  */
 @Injectable()
-export class ArticleFireStoreRepository {
+export class ArticleFireStoreRepositoryImpl
+  implements ArticleFireStoreRepository {
   /**
    * ユーザクラスへの変換
    */
   private readonly ARTICLE_CONVERTER = {
+    /**
+     * Firestoreのデータ形式への変換
+     *
+     * @param {ArticleEntity} articleEntity
+     * @return {admin.firestore.DocumentData} ドキュメントデータ
+     */
     toFirestore(articleEntity: ArticleEntity): admin.firestore.DocumentData {
       return {
         id: articleEntity.id,
@@ -20,11 +30,17 @@ export class ArticleFireStoreRepository {
         datetime: articleEntity.datetime,
       };
     },
+    /**
+     * Firestoreのデータ形式からレスポンスクラスへの変換
+     *
+     * @param {admin.firestore.QueryDocumentSnapshot} snapshot
+     * @return {ArticleEntity} 記事レスポンスクラス
+     */
     fromFirestore(
       snapshot: admin.firestore.QueryDocumentSnapshot,
     ): ArticleEntity {
       const data = snapshot.data();
-      return new ArticleEntity(
+      return ArticleEntity.of(
         data.id,
         data['title'],
         data['link'],
@@ -43,17 +59,19 @@ export class ArticleFireStoreRepository {
   /**
    * 記事の一覧取得
    *
-   * @param {number} count 取得件数
+   * @param {Count} count 取得件数
    * @returns {Promise<ArticleEntity[]>} firestoreのレスポンス
    */
-  async getArticles(count: number): Promise<ArticleEntity[]> {
+  async getArticles(count: Count): Promise<Article[]> {
     return (
       await this.fireStoreConfig
         .getArticle()
         .withConverter(this.ARTICLE_CONVERTER)
         .orderBy('datetime', 'desc')
-        .limit(count)
+        .limit(count.value)
         .get()
-    ).docs.map((doc) => doc.data());
+    ).docs
+      .map((doc) => doc.data())
+      .map((entity) => entity.convertToArticle());
   }
 }

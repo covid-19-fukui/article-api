@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
 } from '@nestjs/common';
-import ArticleErrorResponse from './dto/article.error.response';
+import ArticleErrorResponse from '../dto/article.error.response';
 
 /**
  * エラーハンドリング
@@ -25,7 +25,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       .header('Content-Type', 'application/problem+json')
       .status(status)
       .json({
-        title: this.getTitle(status),
+        title: HttpExceptionFilter.getTitle(status),
         detail: exception.message,
       } as ArticleErrorResponse);
   }
@@ -36,7 +36,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
    * @param {number} status ステータス
    * @returns {string} タイトル
    */
-  private getTitle(status: number): string {
+  private static getTitle(status: number): string {
     switch (status) {
       case 404:
         return 'Not Found';
