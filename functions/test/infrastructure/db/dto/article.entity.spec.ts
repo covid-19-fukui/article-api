@@ -1,6 +1,7 @@
 import ArticleEntity from '../../../../src/infrastructure/db/dto/article.entity';
 import * as admin from 'firebase-admin';
 import Article from '../../../../src/domain/model/article.domain.model';
+import UnixTimeStamp from '../../../../src/domain/type/unixtimestamp.domain.type';
 
 describe('ArticleEntity', () => {
   it('ファクトリメソッド', async () => {
@@ -32,7 +33,7 @@ describe('ArticleEntity', () => {
       admin.firestore.Timestamp.fromDate(new Date('2021-12-01 09:00:00+09:00')),
     );
     expect(sut.convertToArticle()).toStrictEqual(
-      new Article('title', 'detail', 1638316800),
+      new Article('title', 'detail', new UnixTimeStamp(1638316800)),
     );
   });
 });

@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import Article from '../../../domain/model/article.domain.model';
+import UnixTimeStamp from '../../../domain/type/unixtimestamp.domain.type';
 
 export default class ArticleEntity {
   /**
@@ -27,10 +28,6 @@ export default class ArticleEntity {
   }
 
   convertToArticle(): Article {
-    return Article.of(
-      this.title,
-      this.link,
-      this.datetime.toDate().getTime() / 1000,
-    );
+    return Article.of(this.title, this.link, UnixTimeStamp.from(this.datetime));
   }
 }

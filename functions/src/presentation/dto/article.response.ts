@@ -40,7 +40,7 @@ export default class ArticleResponse {
     return new ArticleResponse(
       article.title,
       article.link,
-      article.publishedAt,
+      article.publishedAt.value,
     );
   }
 }

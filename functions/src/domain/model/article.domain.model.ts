@@ -1,3 +1,5 @@
+import UnixTimeStamp from '../type/unixtimestamp.domain.type';
+
 export default class Article {
   /**
    * コンストラクタ
@@ -9,18 +11,18 @@ export default class Article {
   constructor(
     readonly title: string,
     readonly link: string,
-    readonly publishedAt: number,
+    readonly publishedAt: UnixTimeStamp,
   ) {}
 
   /**
    * ファクトリメソッド
    *
-   * @param title {string}
-   * @param link {string}
-   * @param publishedAt {number}
-   * @return 記事 {Article}
+   * @param {string} title
+   * @param {string} link
+   * @param {UnixTimeStamp} publishedAt
+   * @return {Article} 記事
    */
-  static of(title: string, link: string, publishedAt: number): Article {
+  static of(title: string, link: string, publishedAt: UnixTimeStamp): Article {
     return new Article(title, link, publishedAt);
   }
 }

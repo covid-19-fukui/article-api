@@ -8,6 +8,7 @@ import ArticleService from '../../../src/application/service/article.service';
 import Count from '../../../src/domain/model/count.domain.model';
 import Article from '../../../src/domain/model/article.domain.model';
 import MockDate from 'mockdate';
+import UnixTimeStamp from '../../../src/domain/type/unixtimestamp.domain.type';
 
 describe('ArticleController', () => {
   let articleController: ArticleController;
@@ -25,7 +26,7 @@ describe('ArticleController', () => {
     jest
       .spyOn(articleService, 'findArticles')
       .mockImplementation(async (count: Count) => {
-        return [new Article('title', 'link', 1624440300)];
+        return [new Article('title', 'link', new UnixTimeStamp(1624440300))];
       });
     expect(
       await articleController.getArticles(new ArticleQuery(20)),

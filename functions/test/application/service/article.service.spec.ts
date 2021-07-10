@@ -3,6 +3,7 @@ import { ArticleFireStoreRepositoryImpl } from '../../../src/infrastructure/db/r
 import ArticleService from '../../../src/application/service/article.service';
 import Article from '../../../src/domain/model/article.domain.model';
 import Count from '../../../src/domain/model/count.domain.model';
+import UnixTimeStamp from '../../../src/domain/type/unixtimestamp.domain.type';
 
 describe('ArticleService', () => {
   let articleService: ArticleService;
@@ -23,14 +24,14 @@ describe('ArticleService', () => {
         .spyOn(articleFireStoreRepository, 'getArticles')
         .mockImplementation(async (count: Count) => {
           return [
-            new Article('title1', 'link1', 1638316800),
-            new Article('title2', 'link2', 1638403200),
+            new Article('title1', 'link1', new UnixTimeStamp(1638316800)),
+            new Article('title2', 'link2', new UnixTimeStamp(1638403200)),
           ];
         });
 
       expect(await articleService.findArticles(new Count(2))).toStrictEqual([
-        new Article('title1', 'link1', 1638316800),
-        new Article('title2', 'link2', 1638403200),
+        new Article('title1', 'link1', new UnixTimeStamp(1638316800)),
+        new Article('title2', 'link2', new UnixTimeStamp(1638403200)),
       ]);
     });
   });

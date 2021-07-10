@@ -9,6 +9,8 @@ import FirestoreCollectionConfig from './firestore.collection.config';
 export default class FireStoreConfig {
   /**
    * コンストラクタ
+   * @param {admin.firestore.Firestore} firestore
+   * @param {FirestoreCollectionConfig} firestoreCollectionsConfig
    */
   constructor(
     @Inject('FIRESTORE')
@@ -20,7 +22,7 @@ export default class FireStoreConfig {
   /**
    * FireStoreの取得
    *
-   * @returns FireStore
+   * @return {admin.firestore.CollectionReference<admin.firestore.DocumentData>} コレクション
    */
   getArticle(): admin.firestore.CollectionReference<admin.firestore.DocumentData> {
     const collectionName = this.firestoreCollectionsConfig.article;
