@@ -33,8 +33,8 @@ export default class ArticleResponse {
   /**
    * ファクトリメソッド
    *
-   * @param article
-   * @return 記事情報のAPIレスポンス ArticleResponse
+   * @param {Article} article
+   * @return {ArticleResponse} 記事情報のAPIレスポンス
    */
   static of(article: Article): ArticleResponse {
     return new ArticleResponse(

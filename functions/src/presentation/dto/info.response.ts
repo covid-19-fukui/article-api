@@ -20,6 +20,12 @@ export default class InfoResponse {
     this.datetime = datetime;
   }
 
+  /**
+   * ファクトリメソッド
+   *
+   * @param {Now} datetime
+   * @return {InfoResponse} API情報のレスポンス
+   */
   static from(datetime: Now): InfoResponse {
     return new InfoResponse(datetime.value);
   }

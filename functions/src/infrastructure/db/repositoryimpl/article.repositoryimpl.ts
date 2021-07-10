@@ -16,6 +16,12 @@ export class ArticleFireStoreRepositoryImpl
    * ユーザクラスへの変換
    */
   private readonly ARTICLE_CONVERTER = {
+    /**
+     * Firestoreのデータ形式への変換
+     *
+     * @param {ArticleEntity} articleEntity
+     * @return {admin.firestore.DocumentData} ドキュメントデータ
+     */
     toFirestore(articleEntity: ArticleEntity): admin.firestore.DocumentData {
       return {
         id: articleEntity.id,
@@ -24,6 +30,12 @@ export class ArticleFireStoreRepositoryImpl
         datetime: articleEntity.datetime,
       };
     },
+    /**
+     * Firestoreのデータ形式からレスポンスクラスへの変換
+     *
+     * @param {admin.firestore.QueryDocumentSnapshot} snapshot
+     * @return {ArticleEntity} 記事レスポンスクラス
+     */
     fromFirestore(
       snapshot: admin.firestore.QueryDocumentSnapshot,
     ): ArticleEntity {

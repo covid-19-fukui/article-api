@@ -25,6 +25,13 @@ export default class ArticleListApiResponse {
     this.articles = vaccination;
   }
 
+  /**
+   * ファクトリメソッド
+   *
+   * @param {Now} now
+   * @param {Article[]} articles
+   * @return {ArticleListApiResponse} APIレスポンスクラス
+   */
   static of(now: Now, articles: Article[]): ArticleListApiResponse {
     return new ArticleListApiResponse(
       InfoResponse.from(now),

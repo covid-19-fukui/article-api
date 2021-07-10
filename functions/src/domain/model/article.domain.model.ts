@@ -6,7 +6,7 @@ export default class Article {
    *
    * @param {string} title
    * @param {string} link
-   * @param {number} publishedAt
+   * @param {UnixTimeStamp} publishedAt
    */
   constructor(
     readonly title: string,

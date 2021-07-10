@@ -12,7 +12,7 @@ export default class Count {
    * ファクトリメソッド
    *
    * @param {number} value 値
-   * @return 記事 {Article}
+   * @return {Count} 型クラス
    */
   static of(value: number): Count {
     if (value >= 0) {

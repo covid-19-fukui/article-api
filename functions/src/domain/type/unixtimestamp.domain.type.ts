@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 
 export default class UnixTimeStamp {
+  private static readonly DIVIDE = 1000;
   /**
    * コンストラクタ
    *
@@ -15,6 +16,6 @@ export default class UnixTimeStamp {
    * @return {UnixTimeStamp} 型クラス
    */
   static from(timestamp: admin.firestore.Timestamp): UnixTimeStamp {
-    return new UnixTimeStamp(timestamp.toDate().getTime() / 1000);
+    return new UnixTimeStamp(timestamp.toDate().getTime() / this.DIVIDE);
   }
 }

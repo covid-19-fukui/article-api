@@ -18,6 +18,15 @@ export default class ArticleEntity {
     readonly datetime: admin.firestore.Timestamp,
   ) {}
 
+  /**
+   * ファクトリメソッド
+   *
+   * @param {string} id
+   * @param {string} title
+   * @param {string} link
+   * @param {admin.firestore.Timestamp} datetime
+   * @return {ArticleEntity} firebaseの記事エンティティ
+   */
   static of(
     id: string,
     title: string,
@@ -27,6 +36,11 @@ export default class ArticleEntity {
     return new ArticleEntity(id, title, link, datetime);
   }
 
+  /**
+   * 記事ドメインへ変換する
+   *
+   * @return {Article} 記事ドメイン
+   */
   convertToArticle(): Article {
     return Article.of(this.title, this.link, UnixTimeStamp.from(this.datetime));
   }

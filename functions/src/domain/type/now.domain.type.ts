@@ -1,6 +1,7 @@
 import * as moment from 'moment-timezone';
 
 export default class Now {
+  private static readonly TIMEZONE = 'Asia/Tokyo';
   /**
    * コンストラクタ
    *
@@ -14,6 +15,6 @@ export default class Now {
    * @return {Now} Nowドメイン
    */
   static new(): Now {
-    return new Now(moment().tz('Asia/Tokyo').format());
+    return new Now(moment().tz(this.TIMEZONE).format());
   }
 }
